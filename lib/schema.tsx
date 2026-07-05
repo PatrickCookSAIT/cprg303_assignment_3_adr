@@ -8,6 +8,7 @@ export const employeeInfoSchema = z.object({
   jobTitle: z.string().min(1, "Please choose a job title"),
   phone: z
     .string()
+    .length(12)
     .regex(
       /^\d{3}-\d{3}-\d{4}$/,
       "Phone number must be in the format XXX-XXX-XXXX",
@@ -19,6 +20,7 @@ export const employeeInfoSchema = z.object({
     }),
   postalCode: z
     .string()
+    .length(7)
     .regex(
       /^[A-Za-z]\d[A-Za-z]-\d[A-Za-z]\d$/,
       "Postal code must be in the format A9A-9A9",
