@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
@@ -6,10 +7,16 @@ export default function Index() {
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Welcome to ADR Co.</Text>
       </View>
-      <Pressable style={styles.signInContainer}>
+      <Pressable
+        style={styles.signInContainer}
+        onPress={() => router.push("sign-in-form")}
+      >
         <Text style={styles.signInText}>Sign In</Text>
       </Pressable>
-      <Pressable style={styles.signUpContainer}>
+      <Pressable
+        style={styles.signUpContainer}
+        onPress={() => router.push("sign-up-form")}
+      >
         <Text style={styles.signUpText}>Sign Up</Text>
       </Pressable>
     </View>
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: "center",
-    marginTop: 200,
+    marginTop: 100,
     marginBottom: 200,
   },
   headerText: {

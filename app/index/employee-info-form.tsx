@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { employeeInfoSchema, type EmployeeInfoData } from "../lib/schema";
+import { employeeInfoSchema, type EmployeeInfoData } from "../../lib/schema";
 
 const SignInForm = () => {
   const {

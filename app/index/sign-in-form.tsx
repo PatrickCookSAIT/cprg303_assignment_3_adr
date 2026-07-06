@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { signInSchema, type SignInData } from "../lib/schema";
+import { signInSchema, type SignInData } from "../../lib/schema";
 
 const SignInForm = () => {
   const {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: "center",
-    marginTop: 200,
+    marginTop: 100,
     marginBottom: 140,
   },
   headerText: {
