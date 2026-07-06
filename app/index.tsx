@@ -4,9 +4,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 export default function Index() {
   return (
     <View style={styles.contentContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Welcome to ADR Co.</Text>
-      </View>
+      {/*set fixed distance between stack header and content*/}
+      <View style={styles.headerSpacing}></View>
       <Pressable
         style={styles.signInContainer}
         onPress={() => router.push("sign-in-form")}
@@ -29,15 +28,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  headerContainer: {
+  headerSpacing: {
     alignItems: "center",
-    marginTop: 100,
-    marginBottom: 200,
-  },
-  headerText: {
-    fontWeight: "900",
-    fontSize: 20,
-    color: "#333333",
+    marginTop: 60,
+    marginBottom: 10,
   },
   signInContainer: {
     alignItems: "center",

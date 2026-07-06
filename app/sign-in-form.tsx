@@ -1,56 +1,53 @@
+import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { router, Stack } from "expo-router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { signUpSchema, type SignUpData } from "../../lib/schema";
+import { signInSchema, type SignInData } from "../lib/schema";
 
 const SignInForm = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpData>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<SignInData>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      fullName: "",
       email: "",
       password: "",
-      passwordConfirm: "",
     },
     mode: "onSubmit",
   });
 
   //change to move to EmployeeInfoForm
-  const onSubmit = (data: SignUpData) => {
-    console.log("Signed in:", data);
+  const onSubmit = (data: SignInData) => {
+    router.replace({
+      pathname: "/success",
+      params: { type: "signin", email: data.email },
+    });
   };
   return (
     <View style={styles.contentContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Sign Up for Your ADR Account</Text>
-      </View>
+      <Stack.Screen
+        options={{
+          title: "Sign In to Your account",
+          headerLeft: () => (
+            <Pressable onPress={() => router.back()}>
+              <Ionicons
+                name="arrow-back"
+                size={24}
+                style={styles.headerButton}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+      {/*set fixed distance between stack header and content*/}
+      <View style={styles.headerSpacing} />
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Your Name</Text>
-        </View>
-        <Controller
-          control={control}
-          name="fullName"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              style={styles.inputBox}
-            />
-          )}
-        />
-        {errors.fullName && (
-          <Text style={styles.errorText}>{errors.fullName.message}</Text>
-        )}
-      </View>
-      <View style={styles.inputContainer}>
-        <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*email</Text>
+          <Text style={styles.inputHeaderText}>*Email</Text>
         </View>
         <Controller
           control={control}
@@ -86,27 +83,8 @@ const SignInForm = () => {
           <Text style={styles.errorText}>{errors.password.message}</Text>
         )}
       </View>
-      <View style={styles.inputContainer}>
-        <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Confirm password</Text>
-        </View>
-        <Controller
-          control={control}
-          name="passwordConfirm"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              style={styles.inputBox}
-            />
-          )}
-        />
-        {errors.passwordConfirm && (
-          <Text style={styles.errorText}>{errors.passwordConfirm.message}</Text>
-        )}
-      </View>
       <Pressable style={styles.submitButton} onPress={handleSubmit(onSubmit)}>
-        <Text style={styles.submitButtonText}>Register Your Account</Text>
+        <Text style={styles.submitButtonText}>Sign In</Text>
       </Pressable>
     </View>
   );
@@ -120,15 +98,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  headerContainer: {
-    alignItems: "center",
-    marginTop: 100,
-    marginBottom: 100,
+  headerButton: {
+    paddingTop: 40,
+    paddingLeft: 10,
   },
-  headerText: {
-    fontWeight: "900",
-    fontSize: 20,
-    color: "#333333",
+  headerSpacing: {
+    marginTop: 60,
+    marginBottom: 10,
   },
   inputContainer: {
     marginBottom: 15,
@@ -150,8 +126,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     borderRadius: 20,
-    width: 150,
-    height: 30,
+    width: 180,
+    height: 40,
 
     backgroundColor: "#FFC5D3",
     alignItems: "center",

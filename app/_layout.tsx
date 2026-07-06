@@ -1,11 +1,22 @@
 import { Stack } from "expo-router";
-import { Text } from "react-native";
+
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      {/*Redirect landing page to tabs*/}
-      <Stack.Screen name="index" />
-      <Text>test</Text>
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: "#ADD8E6" },
+        headerTintColor: "#333333",
+        headerTitleStyle: {
+          fontWeight: "800",
+        },
+        headerShadowVisible: false,
+        headerTitleAlign: "center",
+        headerTitleContainerStyle: {
+          paddingTop: 40,
+        },
+      }}
+    >
+      <Stack.Screen name="index" options={{ title: "Welcome to ADR Co." }} />
     </Stack>
   );
 }

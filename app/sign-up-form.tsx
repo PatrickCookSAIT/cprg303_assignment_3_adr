@@ -1,38 +1,55 @@
+import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { router, Stack } from "expo-router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { employeeInfoSchema, type EmployeeInfoData } from "../../lib/schema";
+import { signUpSchema, type SignUpData } from "../lib/schema";
 
 const SignInForm = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<EmployeeInfoData>({
-    resolver: zodResolver(employeeInfoSchema),
+  } = useForm<SignUpData>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       fullName: "",
-      jobTitle: "",
-      phone: "",
       email: "",
-      postalCode: "",
+      password: "",
+      passwordConfirm: "",
     },
     mode: "onSubmit",
   });
 
-  //change to move to EmployeeInfoForm
-  const onSubmit = (data: EmployeeInfoData) => {
-    console.log("Signed in:", data);
+  //redirects to the success page carrying over the email address and user's name to notify them the account creation is successful and a verification email will be sent
+  const onSubmit = (data: SignUpData) => {
+    router.replace({
+      pathname: "/success",
+      params: { type: "signup", email: data.email, fullName: data.fullName },
+    });
   };
+
   return (
     <View style={styles.contentContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Enter New Employee</Text>
-      </View>
+      <Stack.Screen
+        options={{
+          title: "Sign Up for Your ADR Account",
+          headerLeft: () => (
+            <Pressable onPress={() => router.back()}>
+              <Ionicons
+                name="arrow-back"
+                size={24}
+                style={styles.headerButton}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+      <View style={styles.headerSpacing} />
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Employee Name</Text>
+          <Text style={styles.inputHeaderText}>*Your Name</Text>
         </View>
         <Controller
           control={control}
@@ -51,26 +68,7 @@ const SignInForm = () => {
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Job Title</Text>
-        </View>
-        <Controller
-          control={control}
-          name="jobTitle"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              style={styles.inputBox}
-            />
-          )}
-        />
-        {errors.jobTitle && (
-          <Text style={styles.errorText}>{errors.jobTitle.message}</Text>
-        )}
-      </View>
-      <View style={styles.inputContainer}>
-        <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Employee Email</Text>
+          <Text style={styles.inputHeaderText}>*email</Text>
         </View>
         <Controller
           control={control}
@@ -89,11 +87,11 @@ const SignInForm = () => {
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Phone</Text>
+          <Text style={styles.inputHeaderText}>*password</Text>
         </View>
         <Controller
           control={control}
-          name="phone"
+          name="password"
           render={({ field: { onChange, value } }) => (
             <TextInput
               value={value}
@@ -102,17 +100,17 @@ const SignInForm = () => {
             />
           )}
         />
-        {errors.phone && (
-          <Text style={styles.errorText}>{errors.phone.message}</Text>
+        {errors.password && (
+          <Text style={styles.errorText}>{errors.password.message}</Text>
         )}
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Postal Code</Text>
+          <Text style={styles.inputHeaderText}>*Confirm password</Text>
         </View>
         <Controller
           control={control}
-          name="postalCode"
+          name="passwordConfirm"
           render={({ field: { onChange, value } }) => (
             <TextInput
               value={value}
@@ -121,12 +119,12 @@ const SignInForm = () => {
             />
           )}
         />
-        {errors.postalCode && (
-          <Text style={styles.errorText}>{errors.postalCode.message}</Text>
+        {errors.passwordConfirm && (
+          <Text style={styles.errorText}>{errors.passwordConfirm.message}</Text>
         )}
       </View>
       <Pressable style={styles.submitButton} onPress={handleSubmit(onSubmit)}>
-        <Text style={styles.submitButtonText}>Submit Employee</Text>
+        <Text style={styles.submitButtonText}>Register Your Account</Text>
       </Pressable>
     </View>
   );
@@ -140,15 +138,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  headerContainer: {
-    alignItems: "center",
-    marginTop: 100,
-    marginBottom: 80,
+  headerButton: {
+    paddingTop: 40,
+    paddingLeft: 10,
   },
-  headerText: {
-    fontWeight: "900",
-    fontSize: 20,
-    color: "#333333",
+  headerSpacing: {
+    marginTop: 60,
+    marginBottom: 10,
   },
   inputContainer: {
     marginBottom: 15,
@@ -170,8 +166,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     borderRadius: 20,
-    width: 150,
-    height: 30,
+    width: 180,
+    height: 40,
 
     backgroundColor: "#FFC5D3",
     alignItems: "center",

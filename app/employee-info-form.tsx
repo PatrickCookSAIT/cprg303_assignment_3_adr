@@ -2,34 +2,75 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { signInSchema, type SignInData } from "../../lib/schema";
+import { employeeInfoSchema, type EmployeeInfoData } from "../lib/schema";
 
 const SignInForm = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInData>({
-    resolver: zodResolver(signInSchema),
+  } = useForm<EmployeeInfoData>({
+    resolver: zodResolver(employeeInfoSchema),
     defaultValues: {
+      fullName: "",
+      jobTitle: "",
+      phone: "",
       email: "",
-      password: "",
+      postalCode: "",
     },
     mode: "onSubmit",
   });
 
   //change to move to EmployeeInfoForm
-  const onSubmit = (data: SignInData) => {
+  const onSubmit = (data: EmployeeInfoData) => {
     console.log("Signed in:", data);
   };
   return (
     <View style={styles.contentContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Sign In to Your Account</Text>
+        <Text style={styles.headerText}>Enter New Employee</Text>
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*Email</Text>
+          <Text style={styles.inputHeaderText}>*Employee Name</Text>
+        </View>
+        <Controller
+          control={control}
+          name="fullName"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              value={value}
+              onChangeText={onChange}
+              style={styles.inputBox}
+            />
+          )}
+        />
+        {errors.fullName && (
+          <Text style={styles.errorText}>{errors.fullName.message}</Text>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.inputHeaderTextContainer}>
+          <Text style={styles.inputHeaderText}>*Job Title</Text>
+        </View>
+        <Controller
+          control={control}
+          name="jobTitle"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              value={value}
+              onChangeText={onChange}
+              style={styles.inputBox}
+            />
+          )}
+        />
+        {errors.jobTitle && (
+          <Text style={styles.errorText}>{errors.jobTitle.message}</Text>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.inputHeaderTextContainer}>
+          <Text style={styles.inputHeaderText}>*Employee Email</Text>
         </View>
         <Controller
           control={control}
@@ -48,11 +89,11 @@ const SignInForm = () => {
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
-          <Text style={styles.inputHeaderText}>*password</Text>
+          <Text style={styles.inputHeaderText}>*Phone</Text>
         </View>
         <Controller
           control={control}
-          name="password"
+          name="phone"
           render={({ field: { onChange, value } }) => (
             <TextInput
               value={value}
@@ -61,12 +102,31 @@ const SignInForm = () => {
             />
           )}
         />
-        {errors.password && (
-          <Text style={styles.errorText}>{errors.password.message}</Text>
+        {errors.phone && (
+          <Text style={styles.errorText}>{errors.phone.message}</Text>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.inputHeaderTextContainer}>
+          <Text style={styles.inputHeaderText}>*Postal Code</Text>
+        </View>
+        <Controller
+          control={control}
+          name="postalCode"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              value={value}
+              onChangeText={onChange}
+              style={styles.inputBox}
+            />
+          )}
+        />
+        {errors.postalCode && (
+          <Text style={styles.errorText}>{errors.postalCode.message}</Text>
         )}
       </View>
       <Pressable style={styles.submitButton} onPress={handleSubmit(onSubmit)}>
-        <Text style={styles.submitButtonText}>Sign In</Text>
+        <Text style={styles.submitButtonText}>Submit Employee</Text>
       </Pressable>
     </View>
   );
@@ -83,7 +143,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     alignItems: "center",
     marginTop: 100,
-    marginBottom: 140,
+    marginBottom: 80,
   },
   headerText: {
     fontWeight: "900",
