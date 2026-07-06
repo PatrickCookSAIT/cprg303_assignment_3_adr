@@ -64,7 +64,11 @@ export default function SuccessScreen() {
       <View>
         <Pressable
           style={styles.logoutButton}
-          onPress={() => router.replace("/")}
+          //dismiss all on stack and return to index
+          onPress={() => {
+            router.dismissAll();
+            router.replace("/");
+          }}
         >
           <Text style={styles.logoutButtonText}>Log Out</Text>
         </Pressable>
