@@ -20,7 +20,8 @@ const SignInForm = () => {
     mode: "onSubmit",
   });
 
-  //change to move to EmployeeInfoForm
+  //redirects to the success page carrying over the email address to notify user they have logged in successfully
+  //sends email data collected from the form to the success page
   const onSubmit = (data: SignInData) => {
     router.replace({
       pathname: "/success",
@@ -33,6 +34,7 @@ const SignInForm = () => {
         options={{
           title: "Sign In to Your account",
           headerLeft: () => (
+            // button to go back on the stack
             <Pressable onPress={() => router.back()}>
               <Ionicons
                 name="arrow-back"
@@ -64,6 +66,7 @@ const SignInForm = () => {
           <Text style={styles.errorText}>{errors.email.message}</Text>
         )}
       </View>
+      {/*form input boxes*/}
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
           <Text style={styles.inputHeaderText}>*password</Text>

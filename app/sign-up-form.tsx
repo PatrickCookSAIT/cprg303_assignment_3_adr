@@ -36,6 +36,7 @@ const SignInForm = () => {
         options={{
           title: "Sign Up for Your ADR Account",
           headerLeft: () => (
+            // button to go back on the stack
             <Pressable onPress={() => router.back()}>
               <Ionicons
                 name="arrow-back"
@@ -47,6 +48,7 @@ const SignInForm = () => {
         }}
       />
       <View style={styles.headerSpacing} />
+      {/*form input boxes*/}
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
           <Text style={styles.inputHeaderText}>*Your Name</Text>

@@ -1,4 +1,6 @@
+import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { router, Stack } from "expo-router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -20,16 +22,39 @@ const SignInForm = () => {
     },
     mode: "onSubmit",
   });
-
-  //change to move to EmployeeInfoForm
+  //pushes to success page for new employee. Sends data of the new employee for display
   const onSubmit = (data: EmployeeInfoData) => {
-    console.log("Signed in:", data);
+    router.push({
+      pathname: "/new-employee-success",
+      params: {
+        fullName: data.fullName,
+        jobTitle: data.jobTitle,
+        phone: data.phone,
+        email: data.email,
+        postalCode: data.postalCode,
+      },
+    });
   };
   return (
     <View style={styles.contentContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Enter New Employee</Text>
-      </View>
+      <Stack.Screen
+        options={{
+          title: "Enter New Employee",
+          headerLeft: () => (
+            // button to go back on the stack
+            <Pressable onPress={() => router.back()}>
+              <Ionicons
+                name="arrow-back"
+                size={24}
+                style={styles.headerButton}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+      {/*spacing between header and content*/}
+      <View style={styles.headerSpacing} />
+      {/*form input boxes*/}
       <View style={styles.inputContainer}>
         <View style={styles.inputHeaderTextContainer}>
           <Text style={styles.inputHeaderText}>*Employee Name</Text>
@@ -140,10 +165,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  headerContainer: {
-    alignItems: "center",
-    marginTop: 100,
-    marginBottom: 80,
+  headerButton: {
+    paddingTop: 40,
+    paddingLeft: 10,
+  },
+  headerSpacing: {
+    marginTop: 60,
+    marginBottom: 10,
   },
   headerText: {
     fontWeight: "900",
@@ -170,9 +198,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     borderRadius: 20,
-    width: 150,
-    height: 30,
-
+    width: 180,
+    height: 40,
     backgroundColor: "#FFC5D3",
     alignItems: "center",
     justifyContent: "center",

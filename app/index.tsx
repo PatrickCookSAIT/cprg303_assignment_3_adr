@@ -8,13 +8,13 @@ export default function Index() {
       <View style={styles.headerSpacing}></View>
       <Pressable
         style={styles.signInContainer}
-        onPress={() => router.push("sign-in-form")}
+        onPress={() => router.push("/sign-in-form")}
       >
         <Text style={styles.signInText}>Sign In</Text>
       </Pressable>
       <Pressable
         style={styles.signUpContainer}
-        onPress={() => router.push("sign-up-form")}
+        onPress={() => router.push("/sign-up-form")}
       >
         <Text style={styles.signUpText}>Sign Up</Text>
       </Pressable>

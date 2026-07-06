@@ -12,7 +12,7 @@ export default function SuccessScreen() {
   //checks which screen redirected to success screen, sign-in or sign-up
   const isSuccessType = type === "signup";
 
-  // automatically redirects after 4 seconds to either sign-in-form or employee-info-form depending on if user signed up or signed in respectively
+  // automatically redirects after 2.5 seconds to either sign-in-form or employee-info-form depending on if user signed up or signed in respectively
   // replaces on stack so going back from next page will return home
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -21,7 +21,7 @@ export default function SuccessScreen() {
       } else {
         router.replace("/employee-info-form");
       }
-    }, 4000);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [isSuccessType]);
