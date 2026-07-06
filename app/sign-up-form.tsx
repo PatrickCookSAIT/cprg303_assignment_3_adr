@@ -35,7 +35,7 @@ const SignInForm = () => {
         </View>
         <Controller
           control={control}
-          name="email"
+          name="fullName"
           render={({ field: { onChange, value } }) => (
             <TextInput
               value={value}
